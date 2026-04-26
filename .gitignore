@@ -38,3 +38,5 @@ next-env.d.ts
 # design handoff (kept in repo at /handoff for reference; uncomment to exclude from a deploy)
 # /handoff
 
+# claude code workspace (session-local config)
+.claude/
