@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --aurora-ink: #0B0420;
+  --aurora-ink2: #160830;
+  --aurora-bone: #F5EFFF;
+  --aurora-a1: #00E5C7;
+  --aurora-a2: #7B2FFF;
+  --aurora-a3: #FF3DA5;
+  --aurora-a4: #FFD93D;
+  --aurora-a5: #5BD7E6;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--aurora-ink);
+  color: var(--aurora-bone);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.font-serif {
+  font-family: var(--font-instrument-serif), serif;
+}
+
+::selection {
+  background: var(--aurora-a3);
+  color: var(--aurora-ink);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 239, 255, 0.12);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 239, 255, 0.22);
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--aurora-a1);
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+@keyframes auroraPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes auroraScrollHint {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .aurora-pillar-grid,
+  .aurora-exit-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .aurora-portfolio-row {
+    grid-template-columns: 40px 1fr 60px !important;
+  }
+  .aurora-portfolio-row > div:nth-child(4),
+  .aurora-portfolio-row > div:nth-child(5) {
+    display: none !important;
+  }
+  .aurora-founder-panel {
+    grid-template-columns: 1fr !important;
+    padding: 32px !important;
+    gap: 32px !important;
+  }
+}
