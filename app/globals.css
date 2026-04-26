@@ -107,21 +107,5 @@ button:focus-visible,
   }
 }
 
-@media (max-width: 800px) {
-  .aurora-pillar-grid,
-  .aurora-exit-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .aurora-portfolio-row {
-    grid-template-columns: 40px 1fr 60px !important;
-  }
-  .aurora-portfolio-row > div:nth-child(4),
-  .aurora-portfolio-row > div:nth-child(5) {
-    display: none !important;
-  }
-  .aurora-founder-panel {
-    grid-template-columns: 1fr !important;
-    padding: 32px !important;
-    gap: 32px !important;
-  }
-}
+/* Responsive layout is driven by useMediaQuery in components, not CSS, to keep
+   inline-style React components in control of their own grid templates. */

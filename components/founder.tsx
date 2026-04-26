@@ -3,6 +3,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { aurora } from "@/lib/tokens";
 import { useInView } from "@/hooks/use-in-view";
+import { useIsMobile } from "@/hooks/use-media-query";
 import { Fade } from "./primitives/fade";
 import { SectionHeader } from "./primitives/section-header";
 
@@ -102,24 +103,29 @@ function FounderPortrait({ t }: { t: number }) {
 export function Founder({ t }: { t: number }) {
   const ref = useRef<HTMLElement>(null);
   const seen = useInView(ref, 0.15);
+  const isMobile = useIsMobile();
 
   return (
     <section
       id="founder"
       ref={ref}
-      style={{ position: "relative", padding: "140px 48px", maxWidth: 1320, margin: "0 auto" }}
+      style={{
+        position: "relative",
+        padding: isMobile ? "80px 20px" : "140px 48px",
+        maxWidth: 1320,
+        margin: "0 auto",
+      }}
     >
       <SectionHeader t={t} eyebrow="03 — Partners" title="Operator-led, | not consultant-led." color={aurora.a4} />
 
       <Fade show={seen} delay={0.15}>
         <div
-          className="aurora-founder-panel"
           style={{
             display: "grid",
-            gridTemplateColumns: "minmax(280px, 360px) 1fr",
-            gap: 56,
+            gridTemplateColumns: isMobile ? "1fr" : "minmax(280px, 360px) 1fr",
+            gap: isMobile ? 32 : 56,
             alignItems: "start",
-            padding: 48,
+            padding: isMobile ? 24 : 48,
             borderRadius: 28,
             background: "rgba(245,239,255,0.04)",
             border: "1px solid rgba(245,239,255,0.1)",
@@ -154,19 +160,19 @@ export function Founder({ t }: { t: number }) {
             </div>
             <div
               style={{
-                fontSize: "clamp(40px, 4.4vw, 64px)",
+                fontSize: isMobile ? 36 : "clamp(40px, 4.4vw, 64px)",
                 fontWeight: 500,
                 color: aurora.bone,
                 letterSpacing: "-0.03em",
                 lineHeight: 1,
-                marginBottom: 28,
+                marginBottom: isMobile ? 20 : 28,
               }}
             >
               John Figueiredo
             </div>
             <p
               style={{
-                fontSize: 17,
+                fontSize: isMobile ? 15.5 : 17,
                 lineHeight: 1.6,
                 color: "rgba(245,239,255,0.78)",
                 margin: 0,
@@ -183,7 +189,7 @@ export function Founder({ t }: { t: number }) {
               properties in the Midwest.
             </p>
 
-            <div style={{ marginTop: 36, display: "flex", flexWrap: "wrap", gap: 32 }}>
+            <div style={{ marginTop: isMobile ? 26 : 36, display: "flex", flexWrap: "wrap", gap: isMobile ? 20 : 32 }}>
               {credentials.map((x) => (
                 <div key={x.k} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                   <span
@@ -197,12 +203,12 @@ export function Founder({ t }: { t: number }) {
                   >
                     {x.k}
                   </span>
-                  <span style={{ fontSize: 16, color: aurora.bone, fontWeight: 500 }}>{x.v}</span>
+                  <span style={{ fontSize: 15, color: aurora.bone, fontWeight: 500 }}>{x.v}</span>
                 </div>
               ))}
             </div>
 
-            <div style={{ marginTop: 40 }}>
+            <div style={{ marginTop: isMobile ? 28 : 40 }}>
               <a
                 href="mailto:john@sisuventures.co"
                 style={{

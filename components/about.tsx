@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import { aurora } from "@/lib/tokens";
 import { useInView } from "@/hooks/use-in-view";
+import { useIsMobile } from "@/hooks/use-media-query";
 import { Fade } from "./primitives/fade";
 import { SectionHeader } from "./primitives/section-header";
 import { pillars, PillarKind } from "@/data/pillars";
@@ -43,7 +44,6 @@ function PillarIcon({ kind, color, t }: { kind: PillarKind; color: string; t: nu
         />
       </svg>
     );
-  // rocket
   return (
     <svg width={sz} height={sz} viewBox="0 0 40 40" aria-hidden>
       <path
@@ -68,12 +68,18 @@ function PillarIcon({ kind, color, t }: { kind: PillarKind; color: string; t: nu
 export function About({ t }: { t: number }) {
   const ref = useRef<HTMLElement>(null);
   const seen = useInView(ref, 0.15);
+  const isMobile = useIsMobile();
 
   return (
     <section
       id="about"
       ref={ref}
-      style={{ position: "relative", padding: "180px 48px 140px", maxWidth: 1320, margin: "0 auto" }}
+      style={{
+        position: "relative",
+        padding: isMobile ? "120px 20px 80px" : "180px 48px 140px",
+        maxWidth: 1320,
+        margin: "0 auto",
+      }}
     >
       <SectionHeader
         t={t}
@@ -83,15 +89,22 @@ export function About({ t }: { t: number }) {
         color={aurora.a1}
       />
 
-      <div className="aurora-pillar-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, marginTop: 40 }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
+          gap: isMobile ? 14 : 20,
+          marginTop: isMobile ? 24 : 40,
+        }}
+      >
         {pillars.map((p, idx) => (
           <Fade key={p.i} show={seen} delay={0.2 + idx * 0.08}>
             <div
               style={{
                 position: "relative",
-                padding: 32,
+                padding: isMobile ? 24 : 32,
                 borderRadius: 22,
-                minHeight: 240,
+                minHeight: isMobile ? 200 : 240,
                 background: "rgba(245,239,255,0.04)",
                 border: "1px solid rgba(245,239,255,0.1)",
                 backdropFilter: "blur(20px)",
@@ -100,7 +113,7 @@ export function About({ t }: { t: number }) {
                 transition: "transform .35s cubic-bezier(.2,1,.3,1.05), background .3s",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: isMobile ? 20 : 32 }}>
                 <div
                   style={{
                     fontSize: 12,
@@ -116,16 +129,16 @@ export function About({ t }: { t: number }) {
               </div>
               <div
                 style={{
-                  fontSize: 30,
+                  fontSize: isMobile ? 24 : 30,
                   fontWeight: 500,
                   color: aurora.bone,
                   letterSpacing: "-0.02em",
-                  marginBottom: 12,
+                  marginBottom: 10,
                 }}
               >
                 {p.k}
               </div>
-              <div style={{ fontSize: 16, lineHeight: 1.55, color: "rgba(245,239,255,0.7)" }}>{p.v}</div>
+              <div style={{ fontSize: 15.5, lineHeight: 1.55, color: "rgba(245,239,255,0.7)" }}>{p.v}</div>
             </div>
           </Fade>
         ))}

@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import { aurora } from "@/lib/tokens";
 import { useInView } from "@/hooks/use-in-view";
+import { useIsMobile } from "@/hooks/use-media-query";
 import { Fade } from "./primitives/fade";
 import { Reveal } from "./primitives/reveal";
 import { GradientText } from "./primitives/gradient-text";
@@ -47,6 +48,7 @@ function ContactGlow({ t }: { t: number }) {
 export function Contact({ t }: { t: number }) {
   const ref = useRef<HTMLElement>(null);
   const seen = useInView(ref, 0.15);
+  const isMobile = useIsMobile();
 
   const onJump = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -57,14 +59,19 @@ export function Contact({ t }: { t: number }) {
     <section
       id="contact"
       ref={ref}
-      style={{ position: "relative", padding: "140px 48px 100px", maxWidth: 1320, margin: "0 auto" }}
+      style={{
+        position: "relative",
+        padding: isMobile ? "80px 20px 60px" : "140px 48px 100px",
+        maxWidth: 1320,
+        margin: "0 auto",
+      }}
     >
       <div
         style={{
           position: "relative",
-          borderRadius: 32,
+          borderRadius: isMobile ? 24 : 32,
           overflow: "hidden",
-          padding: "100px 64px",
+          padding: isMobile ? "60px 24px" : "100px 64px",
           textAlign: "center",
           background: "rgba(245,239,255,0.04)",
           border: "1px solid rgba(245,239,255,0.12)",
@@ -88,7 +95,7 @@ export function Contact({ t }: { t: number }) {
               textTransform: "uppercase",
               fontWeight: 600,
               color: "rgba(245,239,255,0.85)",
-              marginBottom: 32,
+              marginBottom: isMobile ? 22 : 32,
               position: "relative",
             }}
           >
@@ -99,7 +106,7 @@ export function Contact({ t }: { t: number }) {
 
         <h2
           style={{
-            fontSize: "clamp(56px, 7.4vw, 132px)",
+            fontSize: isMobile ? "clamp(40px, 11vw, 56px)" : "clamp(56px, 7.4vw, 132px)",
             fontWeight: 500,
             lineHeight: 0.95,
             letterSpacing: "-0.035em",
@@ -114,36 +121,38 @@ export function Contact({ t }: { t: number }) {
           </Reveal>
         </h2>
 
-        <Fade show={seen} delay={0.25} style={{ marginTop: 40, position: "relative" }}>
+        <Fade show={seen} delay={0.25} style={{ marginTop: isMobile ? 28 : 40, position: "relative" }}>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             <a
               href="mailto:john@sisuventures.co"
               style={{
                 background: aurora.bone,
                 color: aurora.ink,
-                padding: "16px 28px",
+                padding: isMobile ? "14px 22px" : "16px 28px",
                 borderRadius: 999,
                 fontWeight: 600,
-                fontSize: 15.5,
+                fontSize: isMobile ? 14 : 15.5,
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 10,
+                maxWidth: "100%",
               }}
             >
-              john@sisuventures.co <span aria-hidden>→</span>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>john@sisuventures.co</span>
+              <span aria-hidden>→</span>
             </a>
           </div>
         </Fade>
 
-        <Fade show={seen} delay={0.35} style={{ marginTop: 56, position: "relative" }}>
+        <Fade show={seen} delay={0.35} style={{ marginTop: isMobile ? 36 : 56, position: "relative" }}>
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: 48,
+              gap: isMobile ? 10 : 48,
               flexWrap: "wrap",
-              fontSize: 12,
+              fontSize: isMobile ? 10.5 : 12,
               letterSpacing: "0.16em",
               textTransform: "uppercase",
               color: "rgba(245,239,255,0.55)",
@@ -151,7 +160,7 @@ export function Contact({ t }: { t: number }) {
             }}
           >
             <span>Real Estate · Equities · Operating Companies</span>
-            <span style={{ opacity: 0.4 }} aria-hidden>·</span>
+            {!isMobile && <span style={{ opacity: 0.4 }} aria-hidden>·</span>}
             <span>Midwest, US</span>
           </div>
         </Fade>
@@ -159,8 +168,8 @@ export function Contact({ t }: { t: number }) {
 
       <footer
         style={{
-          marginTop: 56,
-          paddingTop: 32,
+          marginTop: isMobile ? 36 : 56,
+          paddingTop: isMobile ? 24 : 32,
           borderTop: "1px solid rgba(245,239,255,0.1)",
           display: "flex",
           justifyContent: "space-between",
@@ -175,22 +184,14 @@ export function Contact({ t }: { t: number }) {
           <AuroraMark t={t} size={18} />
           <span>SISU Ventures · {new Date().getFullYear()}</span>
         </div>
-        <div style={{ display: "flex", gap: 24, fontSize: 12 }}>
+        <div style={{ display: "flex", gap: isMobile ? 16 : 24, fontSize: 12 }}>
           <a href="mailto:john@sisuventures.co" style={{ color: "rgba(245,239,255,0.55)", textDecoration: "none" }}>
             Email
           </a>
-          <a
-            href="#about"
-            onClick={onJump("about")}
-            style={{ color: "rgba(245,239,255,0.55)", textDecoration: "none" }}
-          >
+          <a href="#about" onClick={onJump("about")} style={{ color: "rgba(245,239,255,0.55)", textDecoration: "none" }}>
             About
           </a>
-          <a
-            href="#portfolio"
-            onClick={onJump("portfolio")}
-            style={{ color: "rgba(245,239,255,0.55)", textDecoration: "none" }}
-          >
+          <a href="#portfolio" onClick={onJump("portfolio")} style={{ color: "rgba(245,239,255,0.55)", textDecoration: "none" }}>
             Portfolio
           </a>
         </div>
